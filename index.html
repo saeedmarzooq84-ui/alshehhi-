@@ -1,0 +1,641 @@
+
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090909">
+<title>الشحي | ALSHEHHI</title>
+<style>
+:root{--bg:#090909;--panel:#151515;--gold:#d8b45e;--gold2:#f1d995;--line:#40331d;--muted:#aaa;--white:#f8f4e9}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at 50% -15%,#382a12 0,#111 36%,var(--bg) 72%);color:var(--white);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif;min-height:100vh}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+header{padding:19px 16px 15px;text-align:center;border-bottom:1px solid var(--line);background:#090909ed;position:sticky;top:0;z-index:8;backdrop-filter:blur(14px)}
+.logo{font-size:27px;font-weight:950;color:var(--gold2);letter-spacing:1px}
+.sub{font-size:10px;letter-spacing:4px;color:#b9a16d;margin-top:4px}
+main{max-width:780px;margin:auto;padding:17px 13px 105px}
+.welcome{background:linear-gradient(135deg,#241d10,#111);border:1px solid #65502a;border-radius:20px;padding:21px;margin-bottom:15px}
+.welcome h1{font-size:23px;color:var(--gold2);margin:12px 0 7px}
+h2{font-size:18px;color:var(--gold2);margin:0 0 13px}
+p{line-height:1.7;color:#ddd;margin:6px 0}
+.muted{color:var(--muted);font-size:13px}
+.card{background:linear-gradient(145deg,#191919,#111);border:1px solid var(--line);border-radius:17px;padding:15px;margin:12px 0;box-shadow:0 8px 25px #0005}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.pill,.badge{border:1px solid #71592b;color:var(--gold2);border-radius:99px;padding:5px 10px;font-size:11px;display:inline-block}
+.btn{border:1px solid #80652e;background:linear-gradient(135deg,#e0bf70,#98712c);color:#17120a;font-weight:850;border-radius:12px;padding:11px 15px}
+.btn.secondary{background:#211d14;color:var(--gold2);border-color:#554322}
+.btn.ghost{background:transparent;color:var(--gold2);border-color:#4a3b20}
+.btn.danger{background:#401b1b;color:#ffdede;border-color:#733}
+input,textarea,select{width:100%;background:#0c0c0c;border:1px solid #493c25;border-radius:11px;padding:12px;color:white;margin:6px 0 12px;outline:none}
+textarea{min-height:86px;resize:vertical}
+label{font-size:13px;color:#d9c28e}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.section{display:none}
+.section.active{display:block}
+nav{position:fixed;bottom:0;left:0;right:0;background:#0b0b0bf5;border-top:1px solid var(--line);display:flex;justify-content:center;gap:3px;padding:8px 5px calc(8px + env(safe-area-inset-bottom));z-index:10;backdrop-filter:blur(12px)}
+nav button{flex:1;max-width:130px;background:transparent;border:0;color:#aaa;padding:8px 3px;border-radius:10px;font-size:11px}
+nav button.active{color:var(--gold2);background:#2a2112}
+nav span{display:block;font-size:18px;margin-bottom:3px}
+.statgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{background:#100f0c;border:1px solid #3b301d;border-radius:13px;padding:12px;text-align:center}
+.stat strong{display:block;color:var(--gold2);font-size:20px}
+.stat small{color:#aaa}
+.avatar{width:43px;height:43px;border-radius:50%;object-fit:cover;background:#2c2416;border:1px solid #80652e;display:inline-flex;align-items:center;justify-content:center;color:var(--gold2);font-weight:900;flex-shrink:0}
+.avatar.big{width:90px;height:90px;font-size:28px}
+.userlink{display:flex;align-items:center;gap:10px;background:none;border:0;color:var(--gold2);padding:0;text-align:right}
+.post{padding:13px 0;border-bottom:1px solid #30291c}
+.post:last-child{border:0}
+.posthead{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.posttext{white-space:pre-wrap;overflow-wrap:anywhere;margin:10px 0}
+.empty{text-align:center;padding:22px;color:#999}
+.notice{border-right:3px solid var(--gold);padding:9px 12px;background:#201b11;border-radius:8px;margin:8px 0}
+.role-tag{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:5px 10px;font-size:10px;font-weight:900;white-space:nowrap}
+.role-tag.owner{color:#171006;background:linear-gradient(135deg,#fff0b8,#c18b2e);border:1px solid #ffe6a0;box-shadow:0 0 14px #d8b45e55}
+.role-tag.admin{color:#f1eaff;background:linear-gradient(135deg,#49346d,#21172f);border:1px solid #a88ad8}
+.perm-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}
+.perm-item{display:flex;align-items:center;gap:7px;background:#100f0c;border:1px solid #3b301d;border-radius:10px;padding:9px;font-size:12px}
+.perm-item input{width:auto;margin:0;accent-color:#d8b45e}
+.hide{display:none!important}
+.fieldhint{font-size:11px;color:#999;margin-top:-8px;margin-bottom:10px}
+.product{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid #30291c}
+.overlay{position:fixed;inset:0;background:#000d;z-index:30;display:flex;align-items:center;justify-content:center;padding:18px}
+.modal{width:min(440px,100%);max-height:85vh;overflow:auto;background:#15130f;border:1px solid #80652e;border-radius:20px;padding:22px;text-align:center;box-shadow:0 20px 80px #000}
+.modal h2{font-size:23px}
+.welcomeAnim{animation:pop .7s ease both}
+@keyframes pop{0%{opacity:0;transform:translateY(20px) scale(.94)}70%{transform:translateY(-4px) scale(1.02)}100%{opacity:1;transform:none}}
+.progress{height:8px;background:#302719;border-radius:99px;overflow:hidden}
+.progress i{display:block;height:100%;background:linear-gradient(90deg,#92702f,#f1d995);width:0}
+@media(min-width:650px){main{padding-top:24px}.welcome{padding:26px}}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">الشحي</div>
+<div class="sub">ALSHEHHI COMMUNITY</div>
+</header>
+
+<main>
+<section id="home" class="section active">
+<div class="welcome">
+<span class="pill">المجتمع الرسمي</span>
+<h1>حيّاكم في مجتمع الشحي 🇦🇪</h1>
+<p>مكان يجمع الأعضاء للتواصل ومشاركة الاهتمامات والتراث والفعاليات.</p>
+<div class="actions">
+<button class="btn" onclick="show('community')">اكتشف المجتمع</button>
+<button class="btn secondary" onclick="show('events')">الفعاليات</button>
+</div>
+</div>
+<div class="card">
+<div class="row"><h2>إعلانات الإدارة</h2><span class="badge">رسمي</span></div>
+<div id="homeAnnouncements" class="muted">لا توجد إعلانات حالياً.</div>
+</div>
+<div class="card">
+<h2>نبض المجتمع</h2>
+<div class="statgrid">
+<div class="stat"><strong id="memberCount">0</strong><small>الأعضاء</small></div>
+<div class="stat"><strong id="postCount">0</strong><small>المنشورات</small></div>
+<div class="stat"><strong id="eventCount">0</strong><small>الفعاليات</small></div>
+</div>
+</div>
+<div class="card"><h2>آخر المنشورات</h2><div id="homePosts" class="muted">لا توجد منشورات حالياً.</div></div>
+</section>
+
+<section id="community" class="section">
+<div class="row"><h2>المجتمع</h2><span class="pill">شاركنا رأيك</span></div>
+<div class="card">
+<label>اكتب منشورك</label>
+<textarea id="postText" placeholder="وش حاب تشارك المجتمع؟"></textarea>
+<button class="btn" onclick="addPost()">نشر المنشور</button>
+</div>
+<div class="card"><h2>منشورات الأعضاء</h2><div id="posts"><div class="empty">لا توجد منشورات حالياً.</div></div></div>
+</section>
+
+<section id="events" class="section">
+<h2>الفعاليات</h2>
+<div class="card" id="eventsList"><div class="empty">لا توجد فعاليات معلنة حالياً.</div></div>
+<h2>التراث الشحي</h2>
+<div class="card">
+<p>مساحة للكلمات الشحية القديمة والأمثال والقصص والصور التراثية.</p>
+<div id="wordsList" class="muted">ستظهر هنا الكلمات التي تنشرها الإدارة.</div>
+</div>
+</section>
+
+<section id="market" class="section">
+<h2>متجر المجتمع</h2>
+<div class="card"><div id="products"><div class="empty">لا توجد منتجات متاحة حالياً.</div></div></div>
+</section>
+
+<section id="account" class="section">
+<h2>حسابي</h2>
+<div class="card"><div id="profileBox"></div></div>
+<div class="card">
+<h2>الإدارة</h2>
+<p class="muted">منطقة مخصصة لفريق الإدارة.</p>
+<button class="btn secondary" onclick="adminEntry()">الدخول إلى لوحة الإدارة</button>
+</div>
+<div class="card"><h2>الإشعارات</h2><div id="notifications" class="muted">لا توجد إشعارات جديدة.</div></div>
+</section>
+
+<section id="admin" class="section">
+<div class="row"><h2>لوحة الإدارة</h2><span class="badge">صلاحيات الإدارة</span></div>
+<div class="card" id="annAdminCard">
+<h2>إعلانات الإدارة</h2>
+<input id="annTitle" placeholder="عنوان الإعلان">
+<textarea id="annBody" placeholder="تفاصيل الإعلان"></textarea>
+<button class="btn" onclick="addAnnouncement()">نشر الإعلان</button>
+<div id="adminAnnouncements"></div>
+</div>
+<div class="card" id="heritageAdminCard">
+<h2>إدارة كلمات التراث</h2>
+<input id="wordTitle" placeholder="الكلمة الشحية">
+<textarea id="wordMeaning" placeholder="معنى الكلمة أو شرحها"></textarea>
+<button class="btn" onclick="addWord()">إضافة كلمة</button>
+<div id="adminWords"></div>
+</div>
+<div class="card" id="storeAdminCard">
+<h2>إدارة المتجر</h2>
+<input id="productName" placeholder="اسم المنتج">
+<input id="productPrice" type="number" min="0" placeholder="السعر">
+<textarea id="productDesc" placeholder="وصف المنتج"></textarea>
+<button class="btn" onclick="addProduct()">إضافة منتج</button>
+<div id="adminProducts"></div>
+</div>
+<div class="card" id="eventsAdminCard">
+<h2>إدارة الفعاليات</h2>
+<input id="eventName" placeholder="اسم الفعالية">
+<input id="eventDate" type="date">
+<textarea id="eventDesc" placeholder="تفاصيل الفعالية"></textarea>
+<button class="btn" onclick="addEvent()">إضافة فعالية</button>
+<div id="adminEvents"></div>
+</div>
+<div class="card" id="postsAdminCard">
+<h2>إدارة المنشورات</h2>
+<p class="muted">مراجعة المنشورات وحذف المحتوى المخالف.</p>
+<div id="adminPosts"></div>
+</div>
+<div class="card" id="membersAdminCard"><h2>إدارة الأعضاء</h2><div id="adminUsers"></div></div>
+<div class="card hide" id="teamAdminCard">
+<h2>فريق الإدارة والصلاحيات</h2>
+<p class="muted">الأونر يحدد رتبة كل عضو وصلاحيات الإداريين.</p>
+<div id="adminTeam"></div>
+</div>
+<div class="card">
+<h2>إعدادات الإدارة</h2>
+<div id="adminIdentity" class="notice"></div>
+<button class="btn secondary" onclick="show('account')">العودة للحساب</button>
+<button class="btn danger" onclick="adminLogout()">تسجيل الخروج من الإدارة</button>
+</div>
+</section>
+
+<footer>الشحي | ALSHEHHI</footer>
+</main>
+
+<nav id="nav">
+<button class="active" data-page="home" onclick="show('home',this)"><span>⌂</span>الرئيسية</button>
+<button data-page="community" onclick="show('community',this)"><span>◎</span>المجتمع</button>
+<button data-page="events" onclick="show('events',this)"><span>✦</span>الفعاليات</button>
+<button data-page="market" onclick="show('market',this)"><span>◇</span>المتجر</button>
+<button data-page="account" onclick="show('account',this)"><span>♙</span>حسابي</button>
+<button data-page="admin" onclick="adminEntry()"><span>⚙</span>الإدارة</button>
+</nav>
+
+<div id="welcomeOverlay" class="overlay hide">
+<div class="modal welcomeAnim">
+<div style="font-size:42px">✦</div>
+<h2>مرحباً بك في مجتمع الشحي</h2>
+<p>حيّاك الله بين أهلك 🇦🇪</p>
+<button class="btn" onclick="closeWelcome()">يلا نبدأ</button>
+</div>
+</div>
+
+<div id="profileOverlay" class="overlay hide" onclick="if(event.target===this)closeProfile()">
+<div class="modal">
+<div id="publicProfile"></div>
+<button class="btn secondary" onclick="closeProfile()">إغلاق</button>
+</div>
+</div>
+
+<div id="adminLoginOverlay" class="overlay hide">
+<div class="modal">
+<h2>دخول الإدارة ⚙️</h2>
+<p class="muted">أدخل رمز الدخول للمتابعة</p>
+<input id="adminCodeInput" type="password" inputmode="numeric" autocomplete="off" placeholder="رمز الإدارة">
+<p id="adminLoginError" class="muted" role="alert"></p>
+<button class="btn" style="width:100%" onclick="submitAdminCode()">دخول</button>
+<button class="btn secondary" style="width:100%;margin-top:8px" onclick="closeAdminLogin()">إلغاء</button>
+</div>
+</div>
+
+<div id="authOverlay" class="overlay hide">
+<div class="modal" style="text-align:right">
+<h2 style="text-align:center">إنشاء حساب الشحي</h2>
+<p class="muted" style="text-align:center">أنشئ حسابك للانضمام إلى المجتمع</p>
+<form id="signupForm">
+<label>اسمك</label>
+<input id="regName" required maxlength="32" placeholder="اكتب اسمك">
+<label>دولتك</label>
+<select id="regCountry" required>
+<option value="">اختر دولتك</option>
+<option>الإمارات العربية المتحدة</option>
+<option>المملكة العربية السعودية</option>
+<option>سلطنة عُمان</option>
+<option>الكويت</option>
+<option>قطر</option>
+<option>البحرين</option>
+<option>دولة أخرى</option>
+</select>
+<label>بريدك الإلكتروني</label>
+<input id="regEmail" type="email" required placeholder="name@example.com">
+<label>كلمة المرور</label>
+<input id="regPassword" type="password" minlength="6" required placeholder="6 أحرف أو أكثر">
+<label>نبذة عنك</label>
+<textarea id="regBio" maxlength="180" placeholder="اكتب نبذة بسيطة عنك"></textarea>
+<label>صورة البروفايل</label>
+<input id="regAvatar" type="file" accept="image/*">
+<button class="btn" style="width:100%" type="submit">إنشاء الحساب والدخول</button>
+</form>
+<p class="fieldhint">بيانات البريد وكلمة المرور خاصة ولا تظهر في ملفك العام.</p>
+</div>
+</div>
+
+<script>
+const DB='alshehhI_main_v2';
+let db=JSON.parse(localStorage.getItem(DB)||'{"users":[],"current":null,"posts":[],"announcements":[],"words":[],"products":[],"events":[],"adminActive":false,"adminSessionRole":null}');
+db.users ||= [];
+db.posts ||= [];
+db.announcements ||= [];
+db.words ||= [];
+db.products ||= [];
+db.events ||= [];
+db.adminActive=Boolean(db.adminActive);
+db.adminSessionRole ||= null;
+
+function persist(){localStorage.setItem(DB,JSON.stringify(db));render()}
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function me(){return db.users.find(u=>u.id===db.current)||null}
+function adminRole(){return db.adminSessionRole||(me()?.role==='owner'?'owner':'admin')}
+function isOwner(){return db.adminActive&&adminRole()==='owner'}
+function hasPerm(key){return isOwner()||(db.adminActive&&adminRole()==='admin'&&(me()?.permissions||[]).includes(key))}
+function roleTag(role){return role==='owner'?'<span class="role-tag owner">✦ OWNER</span>':role==='admin'?'<span class="role-tag admin">◆ أدمن استريتر</span>':''}
+function avatarHTML(u,cls='avatar'){return u.avatar?`<img class="${cls}" src="${u.avatar}" alt="">`:`<div class="${cls}">${esc((u.name||'ش').slice(0,1))}</div>`}
+
+function show(id,btn){
+if(id==='admin'&&!db.adminActive){alert('سجّل دخول الإدارة أولاً');return}
+document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+if(btn)btn.classList.add('active');
+else{let b=document.querySelector(`[data-page="${id}"]`);if(b)b.classList.add('active')}
+render();
+}
+function openSignup(){document.getElementById('authOverlay').classList.remove('hide')}
+function closeWelcome(){document.getElementById('welcomeOverlay').classList.add('hide');show('home')}
+
+document.getElementById('signupForm').addEventListener('submit',async e=>{
+e.preventDefault();
+let file=document.getElementById('regAvatar').files[0],avatar='';
+if(file){
+if(file.size>900000){alert('اختر صورة أقل من 900 كيلوبايت');return}
+avatar=await new Promise(resolve=>{
+let r=new FileReader();
+r.onload=()=>resolve(r.result);
+r.readAsDataURL(file);
+});
+}
+let email=document.getElementById('regEmail').value.trim().toLowerCase();
+let existing=db.users.find(u=>u.email===email);
+if(existing){
+if(existing.password!==document.getElementById('regPassword').value){alert('كلمة المرور غير صحيحة');return}
+db.current=existing.id;
+persist();
+document.getElementById('authOverlay').classList.add('hide');
+document.getElementById('signupForm').reset();
+show('home');
+return;
+}
+let user={
+id:'u'+Date.now(),
+name:document.getElementById('regName').value.trim(),
+country:document.getElementById('regCountry').value,
+email,
+password:document.getElementById('regPassword').value,
+bio:document.getElementById('regBio').value.trim(),
+avatar,
+xp:0,
+joined:new Date().toLocaleDateString('ar-AE')
+};
+db.users.push(user);
+db.current=user.id;
+persist();
+document.getElementById('authOverlay').classList.add('hide');
+document.getElementById('welcomeOverlay').classList.remove('hide');
+document.getElementById('signupForm').reset();
+});
+
+function addPost(){
+let u=me();
+if(!u)return;
+let text=document.getElementById('postText').value.trim();
+if(!text)return;
+db.posts.unshift({id:'p'+Date.now(),userId:u.id,text,date:new Date().toLocaleString('ar-AE')});
+u.xp+=10;
+document.getElementById('postText').value='';
+persist();
+}
+
+function openProfile(id){
+let u=db.users.find(x=>x.id===id);
+if(!u)return;
+document.getElementById('publicProfile').innerHTML=`
+${avatarHTML(u,'avatar big')}
+<h2 style="margin:12px 0 4px">${esc(u.name)}</h2>
+<span class="badge">عضو في مجتمع الشحي</span>
+<p>${esc(u.bio||'لا توجد نبذة حتى الآن')}</p>
+<div class="statgrid" style="margin-top:15px">
+<div class="stat"><strong>${u.xp||0}</strong><small>XP</small></div>
+<div class="stat"><strong>${db.posts.filter(p=>p.userId===u.id).length}</strong><small>المنشورات</small></div>
+<div class="stat"><strong>${esc(u.joined||'—')}</strong><small>تاريخ الانضمام</small></div>
+</div>`;
+document.getElementById('profileOverlay').classList.remove('hide');
+}
+function closeProfile(){document.getElementById('profileOverlay').classList.add('hide')}
+
+function adminEntry(){
+if(!me()){
+alert('سجّل دخولك بحسابك أولاً');
+openSignup();
+return;
+}
+if(db.adminActive){show('admin');return}
+document.getElementById('adminCodeInput').value='';
+document.getElementById('adminLoginError').textContent='';
+document.getElementById('adminLoginOverlay').classList.remove('hide');
+setTimeout(()=>document.getElementById('adminCodeInput').focus(),100);
+}
+function closeAdminLogin(){document.getElementById('adminLoginOverlay').classList.add('hide')}
+
+function submitAdminCode(){
+const code=document.getElementById('adminCodeInput').value.trim();
+const error=document.getElementById('adminLoginError');
+const user=me();
+if(!user){error.textContent='سجّل دخولك أولاً';return}
+if(code==='0987'){
+user.role='owner';
+user.permissions=['content','heritage','store','events','posts','members'];
+db.adminSessionRole='owner';
+db.adminActive=true;
+}else if(code==='7890'){
+user.role='admin';
+user.permissions=['content','heritage','store','events','posts','members'];
+db.adminSessionRole='admin';
+db.adminActive=true;
+}else{
+error.textContent='رمز الدخول غير صحيح';
+return;
+}
+closeAdminLogin();
+persist();
+show('admin');
+}
+function adminLogout(){db.adminActive=false;db.adminSessionRole=null;persist();show('account')}
+
+function addAnnouncement(){
+if(!hasPerm('content'))return alert('ما عندك صلاحية إدارة الإعلانات');
+const title=document.getElementById('annTitle'),body=document.getElementById('annBody');
+if(!title.value.trim()||!body.value.trim())return alert('أكمل العنوان والتفاصيل');
+db.announcements.unshift({id:Date.now(),title:title.value.trim(),body:body.value.trim(),date:new Date().toLocaleString('ar-AE')});
+title.value='';body.value='';
+persist();
+}
+
+function addWord(){
+if(!hasPerm('heritage'))return alert('ما عندك صلاحية إدارة التراث');
+const title=document.getElementById('wordTitle'),meaning=document.getElementById('wordMeaning');
+if(!title.value.trim()||!meaning.value.trim())return alert('أدخل الكلمة ومعناها');
+db.words.unshift({id:Date.now(),title:title.value.trim(),meaning:meaning.value.trim()});
+title.value='';meaning.value='';
+persist();
+}
+
+function addProduct(){
+if(!hasPerm('store'))return alert('ما عندك صلاحية إدارة المتجر');
+const name=document.getElementById('productName'),price=document.getElementById('productPrice'),desc=document.getElementById('productDesc');
+if(!name.value.trim()||price.value==='')return alert('أدخل اسم المنتج والسعر');
+db.products.unshift({id:Date.now(),name:name.value.trim(),price:price.value,desc:desc.value.trim(),available:true});
+name.value='';price.value='';desc.value='';
+persist();
+}
+
+function addEvent(){
+if(!hasPerm('events'))return alert('ما عندك صلاحية إدارة الفعاليات');
+const name=document.getElementById('eventName'),date=document.getElementById('eventDate'),desc=document.getElementById('eventDesc');
+if(!name.value.trim())return alert('أدخل اسم الفعالية');
+db.events.unshift({id:Date.now(),name:name.value.trim(),date:date.value,desc:desc.value.trim()});
+name.value='';date.value='';desc.value='';
+persist();
+}
+
+function removeItem(type,id){
+const needed={announcements:'content',words:'heritage',products:'store',events:'events'}[type];
+if(needed&&!hasPerm(needed))return alert('ما عندك صلاحية لهذا الإجراء');
+if(!confirm('تأكيد الحذف؟'))return;
+db[type]=db[type].filter(x=>String(x.id)!==String(id));
+persist();
+}
+function toggleProduct(id){
+if(!hasPerm('store'))return alert('ما عندك صلاحية إدارة المتجر');
+let p=db.products.find(x=>x.id===id);
+if(p){p.available=!p.available;persist()}
+}
+function deletePost(id){
+if(!hasPerm('posts'))return alert('ما عندك صلاحية إدارة المنشورات');
+if(confirm('حذف المنشور؟')){db.posts=db.posts.filter(p=>p.id!==id);persist()}
+}
+
+function render(){
+const posts=document.getElementById('posts');
+const homePosts=document.getElementById('homePosts');
+const homeAnnouncements=document.getElementById('homeAnnouncements');
+const products=document.getElementById('products');
+const eventsList=document.getElementById('eventsList');
+const wordsList=document.getElementById('wordsList');
+const adminAnnouncements=document.getElementById('adminAnnouncements');
+const adminWords=document.getElementById('adminWords');
+const adminProducts=document.getElementById('adminProducts');
+const adminEvents=document.getElementById('adminEvents');
+const adminPosts=document.getElementById('adminPosts');
+const adminUsers=document.getElementById('adminUsers');
+const memberCount=document.getElementById('memberCount');
+const postCount=document.getElementById('postCount');
+const eventCount=document.getElementById('eventCount');
+
+let u=me();
+if(!u){document.getElementById('authOverlay').classList.remove('hide')}
+else{document.getElementById('authOverlay').classList.add('hide')}
+
+document.getElementById('profileBox').innerHTML=u?`
+<div class="row">
+${avatarHTML(u)}
+<div style="flex:1"><b>${esc(u.name)}</b> ${roleTag(u.role)}<div class="muted">${esc(u.country)}</div></div>
+<span class="badge">المستوى ${Math.floor((u.xp||0)/100)+1}</span>
+</div>
+<p>${esc(u.bio||'أضف نبذة عنك من تعديل الملف الشخصي')}</p>
+<div class="statgrid">
+<div class="stat"><strong>${u.xp||0}</strong><small>XP</small></div>
+<div class="stat"><strong>${db.posts.filter(p=>p.userId===u.id).length}</strong><small>منشوراتي</small></div>
+<div class="stat"><strong>${Math.floor((u.xp||0)/100)+1}</strong><small>المستوى</small></div>
+</div>
+<button class="btn secondary" onclick="editProfile()">تعديل الملف الشخصي</button>
+<button class="btn ghost" onclick="logout()">تسجيل الخروج</button>
+`:`<p>أنشئ حسابك للانضمام إلى مجتمع الشحي.</p><button class="btn" onclick="openSignup()">إنشاء حساب</button>`;
+
+let postHTML=db.posts.map(p=>{
+let a=db.users.find(x=>x.id===p.userId)||{name:'عضو',avatar:'',xp:0};
+return `<div class="post">
+<div class="posthead">
+<button class="userlink" onclick="openProfile('${esc(a.id)}')">
+${avatarHTML(a)}
+<span><b>${esc(a.name)}</b> ${roleTag(a.role)}<small class="muted" style="display:block">المستوى ${Math.floor((a.xp||0)/100)+1}</small></span>
+</button>
+<small class="muted">${esc(p.date)}</small>
+</div>
+<div class="posttext">${esc(p.text)}</div>
+</div>`;
+}).join('')||'<div class="empty">لا توجد منشورات حالياً.</div>';
+
+posts.innerHTML=postHTML;
+homePosts.innerHTML=db.posts.slice(0,2).map(p=>{
+let a=db.users.find(x=>x.id===p.userId)||{name:'عضو'};
+return `<div class="post"><b>${esc(a.name)}</b> ${roleTag(a.role)}<p>${esc(p.text)}</p></div>`;
+}).join('')||'لا توجد منشورات حالياً.';
+
+homeAnnouncements.innerHTML=db.announcements.map(a=>`
+<div class="notice"><b>${esc(a.title)}</b><p>${esc(a.body)}</p></div>
+`).join('')||'لا توجد إعلانات حالياً.';
+
+products.innerHTML=db.products.map(p=>`
+<div class="product">
+<div><b>${esc(p.name)}</b><p class="muted">${esc(p.desc)}</p><span class="badge">${esc(p.price)} درهم</span></div>
+<span class="badge">${p.available?'متوفر':'غير متوفر'}</span>
+</div>
+`).join('')||'<div class="empty">لا توجد منتجات حالياً.</div>';
+
+eventsList.innerHTML=db.events.map(e=>`
+<div class="notice"><b>${esc(e.name)}</b><p>${esc(e.desc)}</p><small>${esc(e.date||'موعد يحدد لاحقاً')}</small></div>
+`).join('')||'<div class="empty">لا توجد فعاليات معلنة حالياً.</div>';
+
+wordsList.innerHTML=db.words.map(w=>`
+<div class="notice"><b>${esc(w.title)}</b><p>${esc(w.meaning)}</p></div>
+`).join('')||'لا توجد كلمات مضافة حالياً.';
+
+adminAnnouncements.innerHTML=db.announcements.map(a=>`
+<div class="product"><span>${esc(a.title)}</span><button class="btn danger" onclick="removeItem('announcements',${a.id})">حذف</button></div>
+`).join('');
+
+adminWords.innerHTML=db.words.map(w=>`
+<div class="product"><span>${esc(w.title)}</span><button class="btn danger" onclick="removeItem('words',${w.id})">حذف</button></div>
+`).join('');
+
+adminProducts.innerHTML=db.products.map(p=>`
+<div class="product">
+<span>${esc(p.name)} — ${esc(p.price)} درهم</span>
+<div class="actions">
+<button class="btn secondary" onclick="toggleProduct(${p.id})">${p.available?'إخفاء':'إظهار'}</button>
+<button class="btn danger" onclick="removeItem('products',${p.id})">حذف</button>
+</div>
+</div>
+`).join('');
+
+adminEvents.innerHTML=db.events.map(e=>`
+<div class="product"><span>${esc(e.name)}</span><button class="btn danger" onclick="removeItem('events',${e.id})">حذف</button></div>
+`).join('');
+
+adminPosts.innerHTML=db.posts.map(p=>{
+let a=db.users.find(x=>x.id===p.userId)||{name:'عضو'};
+return `<div class="product"><span>${esc(a.name)}: ${esc(p.text.slice(0,65))}</span><button class="btn danger" onclick="deletePost('${p.id}')">حذف</button></div>`;
+}).join('')||'<p class="muted">لا توجد منشورات.</p>';
+
+adminUsers.innerHTML=`<p class="muted">عدد الأعضاء: ${db.users.length}</p>`+db.users.map(u=>`
+<div class="product"><span>${esc(u.name)} ${roleTag(u.role)}</span><span class="muted">${esc(u.email)}</span></div>
+`).join('');
+
+document.getElementById('adminIdentity').innerHTML=`صلاحيتك الحالية: ${roleTag(adminRole())}`;
+document.getElementById('annAdminCard').classList.toggle('hide',!hasPerm('content'));
+document.getElementById('heritageAdminCard').classList.toggle('hide',!hasPerm('heritage'));
+document.getElementById('storeAdminCard').classList.toggle('hide',!hasPerm('store'));
+document.getElementById('eventsAdminCard').classList.toggle('hide',!hasPerm('events'));
+document.getElementById('postsAdminCard').classList.toggle('hide',!hasPerm('posts'));
+document.getElementById('membersAdminCard').classList.toggle('hide',!hasPerm('members'));
+document.getElementById('teamAdminCard').classList.toggle('hide',!isOwner());
+if(isOwner())renderTeam();
+memberCount.textContent=db.users.length;
+postCount.textContent=db.posts.length;
+eventCount.textContent=db.events.length;
+}
+
+const ADMIN_PERMS=[
+['content','الإعلانات'],
+['heritage','التراث'],
+['store','المتجر'],
+['events','الفعاليات'],
+['posts','المنشورات'],
+['members','الأعضاء']
+];
+
+function setMemberRole(id,role){
+if(!isOwner())return alert('هذه الصلاحية للأونر فقط');
+const target=db.users.find(x=>x.id===id);
+if(!target)return;
+if(target.id===me().id&&role!=='owner')return alert('لا يمكن تغيير رتبة الأونر الحالي');
+target.role=role;
+target.permissions=role==='admin'?(target.permissions||[]):[];
+persist();
+}
+
+function setMemberPermission(id,key,checked){
+if(!isOwner())return alert('هذه الصلاحية للأونر فقط');
+const target=db.users.find(x=>x.id===id);
+if(!target||target.role!=='admin')return;
+target.permissions ||= [];
+target.permissions=checked?[...new Set([...target.permissions,key])]:target.permissions.filter(x=>x!==key);
+persist();
+}
+
+function renderTeam(){
+const el=document.getElementById('adminTeam');
+if(!el)return;
+el.innerHTML=db.users.map(u=>`
+<div class="card">
+<div class="row">
+<div><b>${esc(u.name)}</b> ${roleTag(u.role)}<div class="muted">${esc(u.country||'')}</div></div>
+</div>
+<div class="actions" style="margin-top:10px">
+<button class="btn secondary" onclick="setMemberRole('${esc(u.id)}','admin')">تعيينه إداري</button>
+<button class="btn ghost" onclick="setMemberRole('${esc(u.id)}','member')">إزالة الإدارة</button>
+</div>
+${u.role==='admin'?`<div class="perm-grid">${ADMIN_PERMS.map(([key,label])=>`
+<label class="perm-item"><input type="checkbox" ${((u.permissions||[]).includes(key))?'checked':''} onchange="setMemberPermission('${esc(u.id)}','${key}',this.checked)"> ${label}</label>
+`).join('')}</div>`:''}
+</div>
+`).join('')||'<p class="muted">لا يوجد أعضاء حتى الآن.</p>';
+}
+
+function editProfile(){
+let u=me();
+if(!u)return;
+let n=prompt('الاسم الظاهر',u.name);
+if(n===null)return;
+let b=prompt('نبذة عنك',u.bio||'');
+if(b===null)return;
+u.name=n.trim()||u.name;
+u.bio=b.trim();
+persist();
+}
+function logout(){db.current=null;db.adminActive=false;db.adminSessionRole=null;persist();show('home')}
+document.getElementById('adminCodeInput').addEventListener('keydown',e=>{if(e.key==='Enter')submitAdminCode()});
+render();
+</script>
+</body>
+</html>
